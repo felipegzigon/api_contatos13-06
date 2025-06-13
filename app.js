@@ -1,5 +1,8 @@
 const express = require('express');
 
+const userRoutes = require('./routes/userRoutes');
+const authMiddleware = require('./middleware/authMiddleware')
+
 const dotenv = require('dotenv');
 
 const conectarBanco = require('./config/db');
@@ -18,8 +21,8 @@ app.use(express.json());
 
 
 // Rotas principais
-
-app.use('/api/contatos', contatoRoutes);
+app.use('/api/usuarios', userRoutes); // Rotas públicas
+app.use('/api/contatos', authMiddleware, contatoRoutes); //Rotas protegidas
 
 
 // Conectar ao banco e iniciar o servidor
